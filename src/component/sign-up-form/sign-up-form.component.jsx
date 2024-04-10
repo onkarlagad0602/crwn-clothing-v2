@@ -3,7 +3,6 @@ import { createAuthUserWithEmailAndPassword, createUserDocumentFromAuth } from "
 import FormInput from "../form-input/form-input.component";
 import './sign-up-form.styles.scss';
 import Button from "../button/button.component";
-
 const defaultFormFieldValues = {
     displayName:'',
     email:'',
@@ -15,10 +14,11 @@ const SignUpForm = () => {
     const [formFields, setFormFields]=useState(defaultFormFieldValues);
     const {displayName, email, password, confirmPassword}=formFields;
 
+
 const handleSubmit = async (event) =>{
     event.preventDefault();
 
-    if(password!=confirmPassword){
+    if(password!==confirmPassword){
         alert("passwords does not match")
         return;
     }
@@ -26,7 +26,6 @@ const handleSubmit = async (event) =>{
     try{
         const {user} = await createAuthUserWithEmailAndPassword(email, password);
         // console.log(response);
-
         await createUserDocumentFromAuth(user, {displayName});
         resetFormFields();
     }catch(error){
@@ -62,26 +61,26 @@ const handleSubmit = async (event) =>{
 
                 <FormInput 
                 label="Email"
-                type = "text"
+                type = "email"
                 onChange={handleChange}
-                name="displayName"
-                value={displayName}
+                name="email"
+                value={email}
                 required/>
                 
                 <FormInput 
                 label="Password"
-                type = "text"
+                type = "password"
                 onChange={handleChange}
-                name="displayName"
-                value={displayName}
+                name="password"
+                value={password}
                 required/>                
                 
                 <FormInput
                 label="Confirm Password" 
-                type = "text"
+                type = "password"
                 onChange={handleChange}
-                name="displayName"
-                value={displayName}
+                name="confirmPassword"
+                value={confirmPassword}
                 required/>                
                 <Button type="submit">Sign Up</Button>
             </form>

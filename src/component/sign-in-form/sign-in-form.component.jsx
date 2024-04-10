@@ -13,14 +13,15 @@ const SignInForm = () => {
     const [formFields, setFormFields]=useState(defaultFormFieldValues);
     const {email, password}=formFields;
 
+
 const handleSubmit = async (event) =>{
     event.preventDefault();
 
    
 
     try{
-        const response = await signInAuthUserWithEmailAndPassword(email, password);
-        console.log(response);
+        const {user} = await signInAuthUserWithEmailAndPassword(email, password);
+
         resetFormFields();
     }catch(error){
         switch (error){
@@ -29,6 +30,9 @@ const handleSubmit = async (event) =>{
                 break;
             case 'auth/user-not-found':
                 alert("user not found for given email")
+                break;
+            case 'auth/invalid-credential':
+                alert("invalid combination of email and password");
                 break;
             default:
                 console.log("User creation encountered an error", error)
@@ -50,8 +54,8 @@ const handleSubmit = async (event) =>{
 
     }
     const signInWithGoogle = async () => {
-        const { user } = await signInWithGooglePopup();
-        await createUserDocumentFromAuth(user);
+        await signInWithGooglePopup();
+       
       };
     return (
         <div className='sign-up-container'>
@@ -69,7 +73,7 @@ const handleSubmit = async (event) =>{
                 
                 <FormInput 
                 label="Password"
-                type = "text"
+                type = "password"
                 onChange={handleChange}
                 name="password"
                 value={password}
