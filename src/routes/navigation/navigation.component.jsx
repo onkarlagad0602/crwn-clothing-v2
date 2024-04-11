@@ -41,8 +41,7 @@ const Navigation = ()=>{
            <CartIcon/>
         </div>
      
-{        console.log(isCartOpen)
-} {   isCartOpen && <CartDropdown/>}
+{   isCartOpen && <CartDropdown/>}
     </div>
     <Outlet/>
   </>)
